@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-md-12">
         @if(session('message'))
-            <h5 class="alert alert-success mb-2">{{session('message')}}</h4>
+                <h5 class="alert alert-success mb-2">{{session('message')}}</h4>
         @endif
         <div class="card">
             <div class="card-header">
@@ -44,6 +44,11 @@
                       <li class="nav-item" role="presentation">
                         <button class="nav-link" id="image-tab" data-bs-toggle="tab" data-bs-target="#image-tab-pane" type="button" role="tab" aria-controls="image-tab-pane" aria-selected="false" image>
                           Product Image
+                        </button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="colors-tab" data-bs-toggle="tab" data-bs-target="#colors-tab-pane" type="button" role="tab">
+                          Product Colors
                         </button>
                       </li>
                     </ul>
@@ -154,12 +159,109 @@
                             @endif
                         </div>
                       </div>
+                      <div class="tab-pane fade border p-3" id="colors-tab-pane" role="tabpanel" tabindex="0">
+                        <div class="mb3">
+                          <h4>Add Product Color</h4>
+                          <label>Select Color</label>
+                          <hr>
+                          <div class="row"> 
+                            @forelse ($colors as $color)
+                              <div class="col-md-3">
+                                  <div class="p-2 border mb-3">
+                                    Color: <input type="checkbox" name="colors[{{$color->id}}]" value="{{$color->id}}">{{$color->name}}
+                                    <br>
+                                    Quantity: <input type="number" name="colorquantity[{{$color->id}}]" style="width:70px; border:1px solid;">
+                                  </div>
+                              </div>  
+                            @empty
+                              <div class="col-md-12">
+                                <h1>No Colors found</h1>
+                              </div>
+                            @endforelse
+                          </div>  
+                        </div>
+                        <div class="table-reponsive">
+                          <table class="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th>Color Name</th>
+                                <th>Quantity</th>
+                                <th>Delete</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              @foreach ($product->productColors as $color)
+                              <tr class="prod-color-tr">
+                                <td>
+                                  @if ($color->color)
+                                    {{$color->color->name}}   
+                                  @else
+                                    No Color Found
+                                  @endif                                
+                                </td>
+                                <td>
+                                  <div class="input-group mb-3" style="width:150px;">
+                                    <input type="text" value="{{$color->quantity}}" class="productColorQuantity form-control form-control-sm">
+                                    <button type="button" value="{{$color->id}}" class="updateProductColorBtn btn btn-primary btn-sm text-white">Update</button>
+                                  </div>
+                                </td>
+                                <td>
+                                  <button type="button" value="{{$color->id}}" class="deleteProductColorBtn btn btn-danger btn-sm text-white">Delete</button>
+                                </td>
+                              </tr>
+                              @endforeach
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
                     </div>
-                    <div class="">
-                      <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="py-2 float-end">
+                      <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+                      <button type="submit" class="btn btn-primary text-white">Update</button>
                     </div>
                 </form>
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+  $(document).ready(function(){
+    /*$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+    });*/
+
+    $(document).on('click','.updateProductColorBtn', function () {
+      var product_id="{{$product->id}}";
+      var prod_color_id=$(this).val();
+      var qty = $(this).closest('.prod-color-tr').find('.productColorQuantity').val();
+      alert(prod_color_id);
+      if(qty<=0){
+        alert('Quantity is required');
+        return false;
+      }
+      var data={
+        "_token": $('#token').val(),
+       'product_id':product_id,
+       //'prod_color_id':prod_color_id,
+       'qty':qty
+      };
+      $.ajax({
+        type: "POST",
+        url: "http://localhost:8000/admin/product-color/"+prod_color_id,
+        data: data,
+        success: function (response) {
+          alert(response.message)
+        },
+        error: function (error) {
+        alert('error; ' + eval(error));
+        }
+      });
+    });
+  });
+</script>
+
 @endsection

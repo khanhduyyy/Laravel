@@ -13,9 +13,13 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/', [App\Http\Controllers\Frontend\FrontendController::class, 'index']);
+Route::get('/collections',[App\Http\Controllers\Frontend\FrontendController::class, 'categories']);
+Route::get('/collections/{category_slug}',[App\Http\Controllers\Frontend\FrontendController::class, 'products']);
 
 Auth::routes();
 
@@ -23,6 +27,15 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
     Route::get('dashboard',[App\Http\Controllers\Admin\DashboardController::class,'index']);
+
+    Route::controller(App\Http\Controllers\Admin\SliderController::class)->group(function(){
+        Route::get('sliders','index');
+        Route::get('sliders/create','create');
+        Route::post('sliders/create','store');
+        Route::get('sliders/{slider}/edit','edit');
+        Route::put('sliders/{slider}','update');
+        Route::get('sliders/{slider}/delete','destroy');
+    });
 
     Route::controller(App\Http\Controllers\Admin\CategoryController::class)->group(function(){
         Route::get('/category','index');
@@ -39,6 +52,16 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
         Route::put('/products/{product}','update');
         Route::get('/products/{product}/delete','destroy');
         Route::get('product-image/{product_image_id}/delete','destroyImage');
+        Route::post('product-color/{prod_color_id}','updateProdColorQty');
+        Route::get('product-color/{prod_color_id}','updateProdColorQty');
     });
-    Route::get('/brands',App\Http\Livewire\Admin\Brand\Index::class);        
+    Route::get('/brands',App\Http\Livewire\Admin\Brand\Index::class);      
+    Route::controller(App\Http\Controllers\Admin\ColorController::class)->group(function(){
+        Route::get('/colors','index');
+        Route::get('/colors/create','create');
+        Route::post('/colors/create','store');
+        Route::get('/colors/{color}/edit','edit');
+        Route::put('/colors/{id}','update');
+        Route::get('/colors/{color}/delete','destroy');
+    });  
 });

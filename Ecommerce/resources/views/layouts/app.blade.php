@@ -7,23 +7,29 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title')</title>
+
+    <meta name="description" content="@yield('meta_description')">
+    <meta name="keywords" content="@yield('meta_keyword')">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
     <!-- Style -->
     <link href="{{ asset('asset/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('asset/css/custom.css')}}" rel="stylesheet">
 
     @livewireStyles
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        @include('layouts.inc.frontend.navbar')
+        {{--<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -75,9 +81,9 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav>--}}
 
-        <main class="py-4">
+        <main>
             @yield('content')
         </main>
     </div>

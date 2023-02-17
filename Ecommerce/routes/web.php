@@ -20,6 +20,18 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', [App\Http\Controllers\Frontend\FrontendController::class, 'index']);
 Route::get('/collections',[App\Http\Controllers\Frontend\FrontendController::class, 'categories']);
 Route::get('/collections/{category_slug}',[App\Http\Controllers\Frontend\FrontendController::class, 'products']);
+Route::get('/collections/{category_slug}/{product_slug}',[App\Http\Controllers\Frontend\FrontendController::class, 'productView']);
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/wishlist',[App\Http\Controllers\Frontend\WishlistController::class, 'index']);
+    Route::get('/cart',[App\Http\Controllers\Frontend\CartController::class, 'index']);
+    Route::get('/checkout',[App\Http\Controllers\Frontend\CheckoutController::class, 'index']);
+    Route::get('/orders',[App\Http\Controllers\Frontend\OrderController::class, 'index']);
+    Route::get('/orders/{orderID}',[App\Http\Controllers\Frontend\OrderController::class, 'show']);
+});
+
+Route::get('/thank-you',[App\Http\Controllers\Frontend\FrontendController::class, 'thankyou']);
+
 
 Auth::routes();
 
@@ -64,4 +76,10 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
         Route::put('/colors/{id}','update');
         Route::get('/colors/{color}/delete','destroy');
     });  
+
+    Route::controller(App\Http\Controllers\Admin\OrderController::class)->group(function(){
+        Route::get('/orders','index');
+        Route::get('/orders/{orderId}','show');
+        Route::put('/orders/{orderId}','updateOrderStatus');
+    });
 });

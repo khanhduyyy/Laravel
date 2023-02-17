@@ -24,6 +24,10 @@
     <link href="{{ asset('asset/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{ asset('asset/css/custom.css')}}" rel="stylesheet">
 
+    <!-- CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    <!-- Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
     @livewireStyles
 </head>
 <body>
@@ -90,6 +94,13 @@
         <!-- Scripts -->
         <script type="text/javascript" href="{{ asset("asset/js/jquery-3.6.3.min.js")}}"></script>
         <script type="text/javascript" href="{{ asset("asset/js/bootstrap.bundle.min.js")}}"></script>
+        <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+        <script>
+            window.addEventListener('message', event => {
+                alertify.set('notifier','position', 'bottom-right');
+                alertify.notify(event.detail.text,event.detail.type);
+            })
+        </script>
         @livewireScripts
 </body>
 </html>

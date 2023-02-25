@@ -6,7 +6,7 @@ use App\Models\Wishlist;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
-
+use App\Models\Product;
 
 class View extends Component
 {
@@ -53,7 +53,18 @@ class View extends Component
     }
     public function incrementQuantity()
     {
-        $this->quantityCount++;
+        if($this->quantityCount >= $this->product->quantity)
+        {
+            $this->dispatchBrowserEvent('message', [
+                'text' => 'Only '.$this->product->quantity.' Quantity Available',
+                'type'=> 'warning',
+                'status'=> 404
+            ]);
+        }
+        else
+        {
+            $this->quantityCount++;
+        }
     }
     public function decrementQuantity()
     {

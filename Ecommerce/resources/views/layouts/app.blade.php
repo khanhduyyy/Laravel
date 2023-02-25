@@ -90,6 +90,8 @@
         <main>
             @yield('content')
         </main>
+
+        @include('layouts.inc.frontend.footer')
     </div>
         <!-- Scripts -->
         <script type="text/javascript" href="{{ asset("asset/js/jquery-3.6.3.min.js")}}"></script>

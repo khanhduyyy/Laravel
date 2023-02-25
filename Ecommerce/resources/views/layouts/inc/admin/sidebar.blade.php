@@ -26,12 +26,12 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+        <a class="nav-link" data-bs-toggle="collapse" href="#ui" aria-expanded="false" aria-controls="ui">
           <i class="mdi mdi-plus-circle menu-icon"></i>
           <span class="menu-title">Products</span>
           <i class="menu-arrow"></i>
         </a>
-        <div class="collapse" id="ui-basic">
+        <div class="collapse" id="ui">
           <ul class="nav flex-column sub-menu">
             <li class="nav-item"> <a class="nav-link" href="{{url('admin/products/create')}}">Add Product</a></li>
             <li class="nav-item"> <a class="nav-link" href="{{url('admin/products')}}">View Product</a></li>
@@ -45,15 +45,27 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="pages/charts/chartjs.html">
-          <i class="mdi mdi-chart-pie menu-icon"></i>
-          <span class="menu-title">Charts</span>
+        <a class="nav-link" href="{{url('admin/orders')}}">
+          <i class="mdi mdi-file-document-box-outline menu-icon"></i>
+          <span class="menu-title">Orders</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="pages/tables/basic-table.html">
+        <a class="nav-link" href="{{url('admin/sliders')}}">
           <i class="mdi mdi-grid-large menu-icon"></i>
-          <span class="menu-title">Tables</span>
+          <span class="menu-title">Sliders</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url('admin/settings')}}">
+          <i class="fa fa-gear menu-icon"></i>
+          <span class="menu-title">Settings</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="pages/charts/chartjs.html">
+          <i class="mdi mdi-chart-pie menu-icon"></i>
+          <span class="menu-title">Charts</span>
         </a>
       </li>
       <li class="nav-item">
@@ -77,12 +89,6 @@
             <li class="nav-item"> <a class="nav-link" href="pages/samples/lock-screen.html"> Lockscreen </a></li>
           </ul>
         </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="documentation/documentation.html">
-          <i class="mdi mdi-file-document-box-outline menu-icon"></i>
-          <span class="menu-title">Documentation</span>
-        </a>
       </li>
     </ul>
   </nav>

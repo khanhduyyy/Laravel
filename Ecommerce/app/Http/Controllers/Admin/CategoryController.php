@@ -22,7 +22,6 @@ class CategoryController extends Controller
     public function store(CategoryFormRequest $request)
     {
         $validatedData=$request->validated();
-        
         $category=new Category();
         $category->name=$validatedData['name'];
         $category->slug=Str::slug($validatedData['slug']);

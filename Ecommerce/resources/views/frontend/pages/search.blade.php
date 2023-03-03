@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','New Arrivals Product')
+@section('title','Search')
 
 @section('content')
 
@@ -10,15 +10,16 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <h4>New Arrivals Products</h4>
+            @if($searchProducts->count()!=0)
+            <h4>Search Results</h4>
+            @endif
             <div class="underline"></div>
           </div>
-            @if($newArrivalsProducts)
-            @foreach($newArrivalsProducts as $productItem)
+            @if($searchProducts->count()!=0)
+            @foreach($searchProducts as $productItem)
             <div class="col-md-3">
                 <div class="product-card">
                     <div class="product-card-img">
-                        <label class="stock bg-danger">New</label>    
                         @if($productItem->productImages->count()>0)
                         <a href="{{url('/collections/'.$productItem->category->slug.'/'.$productItem->slug)}}">
                             <img src="{{asset($productItem->productImages[0]->image)}}" alt="{{$productItem->name}}">
@@ -43,7 +44,7 @@
             @else
             <div class="col-md-12">
               <div class="p-2">
-                <h4>No Products Available</h4>
+                <h4>No Product Found</h4>
               </div>
             </div>
             @endif

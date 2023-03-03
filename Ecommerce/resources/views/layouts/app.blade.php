@@ -103,6 +103,7 @@
                 alertify.notify(event.detail.text,event.detail.type);
             })
         </script>
+        
         @livewireScripts
 </body>
 </html>

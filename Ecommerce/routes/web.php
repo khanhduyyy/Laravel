@@ -25,7 +25,10 @@ Route::get('/collections/{category_slug}/{product_slug}',[App\Http\Controllers\F
 
 Route::controller(App\Http\Controllers\Frontend\FrontendController::class)->group(function(){
     Route::get('/new-arrivals','newArrival');
+    Route::get('/search','searchProducts');
 });
+
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/wishlist',[App\Http\Controllers\Frontend\WishlistController::class, 'index']);
@@ -33,6 +36,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/checkout',[App\Http\Controllers\Frontend\CheckoutController::class, 'index']);
     Route::get('/orders',[App\Http\Controllers\Frontend\OrderController::class, 'index']);
     Route::get('/orders/{orderID}',[App\Http\Controllers\Frontend\OrderController::class, 'show']);
+    Route::get('/profile',[App\Http\Controllers\Frontend\UserController::class, 'index']);
+    Route::post('/profile',[App\Http\Controllers\Frontend\UserController::class, 'updateUserDatails']);
 });
 
 Route::get('/thank-you',[App\Http\Controllers\Frontend\FrontendController::class, 'thankyou']);
@@ -93,5 +98,15 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
         
         Route::get('/invoice/{orderId}','viewInvoice');
         Route::get('/invoice/{orderId}/generate','generateInvoice');
+
+        Route::get('/invoice/{orderId}/mail','mailInvoice');
+    });
+
+    Route::controller(App\Http\Controllers\Admin\UserController::class)->group(function(){
+        Route::get('/users','index');
+        Route::get('/users/create','create');
+        Route::post('/users','store');
+        Route::get('/users/{id}/edit','edit');
+        Route::put('/users/{user_id}','update');
     });
 });

@@ -16,20 +16,12 @@
                     @if (session('message')) 
                         <p class="alert alert-success">{{ session('message') }}</p>
                     @endif
-                    @if ($errors->any())
-                    <ul class="alert alert-danger">
-                        @foreach ($errors as $error)
-                            <li class="text-danger">{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                        
-                    @endif
                     <div class="card shadow">
                         <div class="card-header bg-primary">
                             <h4 class="mb-0 text-white">User Details</h4>
                         </div>
                         <div class="card-body">
-                            <form action="{{ url('profile') }}">
+                            <form action="{{ url('profile') }}" method="POST">
                             @csrf
                             
                                 <div class="row">
@@ -49,18 +41,27 @@
                                         <div class="mb-3">
                                             <label for="">Phone Number</label>
                                             <input type="text" name="phone" class="form-control">
+                                            @error('phone')
+                                                <small class='text-danger'>{{$message}}</small>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="">Zip/Pin Code</label>
-                                            <input type="text" name="zip_code" class="form-control">
+                                            <input type="text" name="pin_code" class="form-control">
+                                            @error('pin_code')
+                                                <small class='text-danger'>{{$message}}</small>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <label for="">Address</label>
                                             <textarea name="address" class="form-control"></textarea>
+                                            @error('address')
+                                                <small class='text-danger'>{{$message}}</small>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-12">

@@ -18,7 +18,8 @@ class UserController extends Controller
         $request->validate([
             'username'=>['required','string'],
             'phone'=>['required','digits:10'],
-            'pin_code'=>['required','digits:6']
+            'pin_code'=>['required','digits:6'],
+            'address'=>['required','string','max:499']
         ]);
         $user=User::findOrFail(Auth::user()->id);
         $user->update([
